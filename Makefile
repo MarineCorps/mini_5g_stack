@@ -1,18 +1,21 @@
 CC = gcc
 CFLAGS = -Wall -O2
+BIN_DIR = bin
 
-COMMON = common/common_def.h
+UE_SRCS = ue/ue_main.c ue/sdap.c ue/pdcp.c ue/mac.c
+GNB_SRCS = gnb/gnb_main.c gnb/mac.c gnb/pdcp.c gnb/sdap.c
 
-UE_OBJS = ue/ue_main.c ue/sdap.c ue/pdcp.c ue/mac.c
-GNB_OBJS = gnb/gnb_main.c gnb/mac.c gnb/pdcp.c gnb/sdap.c
+.PHONY: all clean
 
-all: ue gnb
+all: $(BIN_DIR)/ue_bin $(BIN_DIR)/gnb_bin
 
-ue: $(UE_OBJS) $(COMMON)
-	$(CC) $(CFLAGS) -o ue_bin $(UE_OBJS)
+$(BIN_DIR)/ue_bin: $(UE_SRCS)
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) -o $@ $^
 
-gnb: $(GNB_OBJS) $(COMMON)
-	$(CC) $(CFLAGS) -o gnb_bin $(GNB_OBJS)
+$(BIN_DIR)/gnb_bin: $(GNB_SRCS)
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
-	rm -f ue_bin gnb_bin
+	@rm -rf $(BIN_DIR)
