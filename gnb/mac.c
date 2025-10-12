@@ -3,6 +3,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include "../common/common_def.h"
+#include "../common/packet_print.h"
 
 #define GNB_PORT 9000
 
